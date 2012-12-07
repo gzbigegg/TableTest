@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ScrollableTableView : UIView
+@protocol ScrollableTableViewDataSource;
+
+@interface ScrollableTableView : UIView {
+    
+}
+
+@property (nonatomic, assign) id<ScrollableTableViewDataSource> dataSource;
 
 @end
 

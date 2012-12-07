@@ -10,6 +10,8 @@
 
 @implementation ScrollableTableView
 
+@synthesize dataSource = _dataSource;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
