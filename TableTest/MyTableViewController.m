@@ -7,6 +7,10 @@
 //
 
 #import "MyTableViewController.h"
+#import "NSObject+DelayedBlock.h"
+
+#define kNumberOfSections 20
+#define kNumberOfRowsInSection 1
 
 @interface MyTableViewController ()
 
@@ -43,6 +47,8 @@
     _tblView.dataSource = self;
     _tblView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:_tblView];
+    
+    [_tblView scrollToPosition:CGPointMake(40, 0) animated:YES];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -55,6 +61,16 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - ScrollableTableViewDataSource
+
+- (NSInteger)tableView:(ScrollableTableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(ScrollableTableView *)tableView {
+    return [_data count];
 }
 
 @end

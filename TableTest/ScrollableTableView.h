@@ -7,19 +7,33 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+#import "Constants.h"
+#import "ScrollableTableViewBGScrollView.h"
+#import "ScrollableTableViewContentBackgroundView.h"
 
 @protocol ScrollableTableViewDataSource;
 
-@interface ScrollableTableView : UIView {
+@interface ScrollableTableView : UIView <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate> {
+    BOOL _respondsToNumberOfSections;
     
+    ScrollableTableViewBGScrollView *_scrlView;
+    ScrollableTableViewContentBackgroundView *_tblView;
 }
 
 @property (nonatomic, assign) id<ScrollableTableViewDataSource> dataSource;
 
+- (void)scrollToPosition:(CGPoint)pos animated:(BOOL)animated;
+
 @end
 
 @protocol ScrollableTableViewDataSource <NSObject>
+@required
 
+- (NSInteger)tableView:(ScrollableTableView *)tableView numberOfRowsInSection:(NSInteger)section;
 
+@optional
+
+- (NSInteger)numberOfSectionsInTableView:(ScrollableTableView *)tableView;
 
 @end
