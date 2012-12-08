@@ -30,7 +30,9 @@
 @protocol ScrollableTableViewDataSource <NSObject>
 @required
 
+- (UIView *)tableView:(ScrollableTableView *)tableView cellForIndexPath:(NSIndexPath *)indexPath;
 - (NSInteger)tableView:(ScrollableTableView *)tableView numberOfRowsInSection:(NSInteger)section;
+- (CGFloat)tableCellWidth;
 
 @optional
 

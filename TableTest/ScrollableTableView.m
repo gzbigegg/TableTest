@@ -38,6 +38,7 @@
         _scrlView = [[ScrollableTableViewBGScrollView alloc] initWithFrame:self.bounds];
         _scrlView.parent = self;
         _scrlView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        [_scrlView setShowsHorizontalScrollIndicator:NO];
         [self addSubview:_scrlView];
         
         _tblView = [[ScrollableTableViewContentBackgroundView alloc] initWithFrame:_scrlView.bounds];
@@ -47,8 +48,6 @@
         _tblView.separatorStyle = UITableViewCellSelectionStyleNone;
         _tblView.backgroundColor = [UIColor clearColor];
         [_scrlView addSubview:_tblView];
-        
-        
     }
     
     return self;
@@ -107,8 +106,16 @@
 }
 
 - (UITableViewCell *)tblView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    cell.textLabel.text = @"WTF";
+    static NSString *CellID = @"ScrollaleCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID] autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    [cell.contentView addSubview:[_dataSource tableView:self cellForIndexPath:indexPath]];
+    
     return cell;
 }
 
@@ -140,7 +147,7 @@
 }
 
 - (void)adjustWidth {
-    CGFloat width = 500.0f;
+    CGFloat width = [_dataSource tableCellWidth];
     _scrlView.contentSize = CGSizeMake(width, 0.0f);
     
     CGRect f = _tblView.frame;
